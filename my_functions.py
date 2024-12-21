@@ -2,7 +2,8 @@
 import numpy as np
 import pandas as pd
 from sklearn.cluster import AgglomerativeClustering
-
+import matplotlib.pyplot as plt
+import seaborn as sns
 
 def get_ss(df, feats):
     """
@@ -126,3 +127,34 @@ def get_r2_hc(df, link_method, max_nclus, min_nclus=1, dist="euclidean"):
         r2.append(get_rsq(df_concat, feats, 'labels'))
         
     return np.array(r2)
+
+def ss_vs_mm(df_original,df_minmax,df_standard):
+    sns.set_style('whitegrid')
+
+    # Create subplots with 3 rows, 1 column:
+    fig, axes = plt.subplots(3,1, 
+                            figsize=(5,5), tight_layout=True)
+
+    # Which feature do you want to visualize?
+    hp_feat = 'customer_age'
+
+    # common function args for histplot
+    hp_args = dict(x=hp_feat, bins=15)
+
+
+    sns.histplot(df_original, ax=axes[0], **hp_args)
+    axes[0].set_title('{}: Original'.format(hp_feat))
+    axes[0].set_xlabel(None)
+
+    sns.histplot(df_minmax, ax=axes[1], **hp_args)
+    axes[1].set_title('{}: MinMaxScaler()'.format(hp_feat))
+    axes[1].set_xlabel(None)
+
+    sns.histplot(df_standard, ax=axes[2], **hp_args)
+    axes[2].set_title('{}: StandardScaler()'.format(hp_feat))
+    axes[2].set_xlabel(None)
+
+
+    plt.show()
+
+    sns.set()

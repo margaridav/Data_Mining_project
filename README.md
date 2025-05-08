@@ -33,4 +33,3 @@ This dataset contains anonymized customer data from **ABCDEats Inc.**, represent
 
 ---
 
-Happy Analyzing! 🍽️
